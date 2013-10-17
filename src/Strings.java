@@ -17,19 +17,19 @@ interface StringsCompare {
 //compare two string lexicographically
 
 class StringLexComp implements StringsCompare {
-	public boolean comesBefore(String s1, String s2) {
-		if ( s1.compareTo(s2) < 0 )
-		     { return true; }
-		else 
-		     { return false; }
-	}
+    public boolean comesBefore(String s1, String s2) {
+        if ( s1.compareTo(s2) < 0 )
+        { return true; }
+        else 
+        { return false; }
+    }
 }
 
 //compare if the longer string comes first
 
 class StringLengthComp implements StringsCompare {
     public boolean comesBefore(String s1, String s2) {
-        if ( s1.length() > s2.length() ) { 
+        if ( s1.length() < s2.length() ) { 
             return true; 
         }
         else {
@@ -130,10 +130,6 @@ abstract class ConsLoS implements ILoS {
 //sort the list as required 
     public abstract ILoS sort(StringsCompare compare);
 }
-
-
-
-
 
 //to represent a list with only 1 string 
 class OneLoS extends ConsLoS {

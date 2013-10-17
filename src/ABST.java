@@ -34,18 +34,13 @@ class MtLoBook implements ILoBook {
     MtLoBook() {
         //empty constructor
     }
-    /** inserts book into list according to given filter **
-    public ILoBook insert(IBookComparator order, Book b) {
-        return new ConsLoBook(b, this);
-    }
-    */
     /** returns whether the list is empty or not **/
     public boolean isEmpty() {
         return true;
     }
     /** insert all the item from a list to the given binary tree **/
     public ABST buildTree(ABST that) {
-    	return that;
+        return that;
     }
 }
 
@@ -57,16 +52,6 @@ class ConsLoBook implements ILoBook {
         this.first = first;
         this.rest = rest;
     }
-    /** inserts book into list according to given filter **
-    public ILoBook insert(IBookComparator order, Book b) {
-        if (order.compare(this.first, b) > 0) {
-            return new ConsLoBook(this.first, this.rest.insert(order, b));
-        }
-        else {
-            return new ConsLoBook(b, this);
-        }
-    }
-    */
     /** returns whether the list is empty or not **/
     public boolean isEmpty() {
         return false;
@@ -153,7 +138,7 @@ abstract class ABST {
     /**helper method
      *  returns right pointer of Node **/
     abstract ABST getRight();
-    /** returns whether this tree contains the same books as the given tree **/
+    /**returns whether this tree contains the same books as the given tree**/
     abstract boolean sameData(ABST that);
     /** returns whether this tree has Book b **/
     abstract boolean inTree(Book b);
@@ -197,7 +182,7 @@ class Leaf extends ABST {
     boolean sameTree(ABST that) {
         return that.isEmpty();
     }
-    /** returns whether this tree contains the same books as the given tree **/
+    /**returns whether this tree contains the same books as the given tree**/
     boolean sameData(ABST that) {
         return true;
     }
@@ -276,14 +261,17 @@ class Node extends ABST {
      **/
     public ABST insert(Book b) {
         if (this.order.compare(this.data, b) == 0) {
-            return this.right = new Node(this.order, b, new Leaf(this.order), this.right);
+            return this.right = new Node(this.order, b, new Leaf(this.order),
+                    this.right);
         }
         else {
             if (this.order.compare(this.data, b) > 0) {
-                return new Node(this.order, this.data, this.left.insert(b), this.right);
+                return new Node(this.order, this.data, this.left.insert(b),
+                        this.right);
             }
             else {
-                return new Node(this.order, this.data, this.left, this.right.insert(b));
+                return new Node(this.order, this.data, this.left,
+                        this.right.insert(b));
             }
         }
     }
@@ -292,14 +280,6 @@ class Node extends ABST {
     public Book getFirst() {
         //returns top of binary tree
         return this.data;
-       /* gets first order wise not sure if thats what we want
-        if (this.left.isEmpty()) {
-    	   return this.data;
-        }
-        else {
-        	return this.left.getFirst();
-        }
-        */
     }
     
     /** produces ABST search tree with first book removed **/
@@ -321,15 +301,6 @@ class Node extends ABST {
                 return this.left.appendToEnd(this.right);
             }
         }
-        /*just as above, not sure if this is what we want
-        if (this.left.isEmpty()) {
-            return this.right ;
-        }
-        else {
-            return new Node(this.order, this.data,
-            		this.left.getRest(), this.right);
-        }
-        */
     }
    
     /** determines whether given tree is identical to this tree **/
@@ -359,11 +330,9 @@ class Node extends ABST {
                     return true;
                 }
                 else {
-                    /*with out this sameData recurse error, with build list... WHY?!?!??
                     if (this.data == this.right.getData()) {
                         return true;
                     }
-                    */
                     return this.getRest().sameData(that);
                 }
             }
@@ -389,22 +358,24 @@ class Node extends ABST {
                 return new ConsLoBook( this.data, that );
             }
             else {
-                return this.right.buildList( new ConsLoBook( this.data, that ));
+                return this.right.buildList( 
+                        new ConsLoBook( this.data, that ));
             }
         }
         else {
             if (this.right.isEmpty()) {
-                return this.left.buildList( new ConsLoBook( this.data, that ));
+                return this.left.buildList(new ConsLoBook( this.data, that ));
             }
             else {
-                return this.right.buildList( this.left.buildList( new ConsLoBook( this.data, that )));
+                return this.right.buildList( this.left.buildList(
+                        new ConsLoBook( this.data, that )));
             }
             
         }
     }
     /** returns whether given list is the same as this binary tree **/
     boolean sameAsList(ILoBook that) {
-        return that.buildTree(new Leaf(this.order)).equals(this);
+        return that.buildTree(new Leaf(this.order)).sameTree(this);
         		
     }
     
@@ -444,19 +415,19 @@ class ExamplesBinaryTree {
     ILoBook empty = new MtLoBook();
     
     
-    ILoBook priceList = new ConsLoBook(this.tao, new ConsLoBook(this.tale,
-                            new ConsLoBook(this.jeff, 
+    ILoBook priceList = new ConsLoBook(this.jeff, new ConsLoBook(this.tale,
+                            new ConsLoBook(this.tao, 
                                new ConsLoBook(this.lord, 
                                  this.empty))));
     ILoBook reverseList = new ConsLoBook(this.lord, new ConsLoBook(this.tao,
                               new ConsLoBook(this.tale, 
                                    new ConsLoBook(this.jeff, 
                                       this.empty))));
-    ILoBook titleList = new ConsLoBook(this.lord, new ConsLoBook(this.jeff,
-                             new ConsLoBook(this.tao, 
-                                new ConsLoBook(this.tale, 
+    ILoBook titleList = new ConsLoBook(this.jeff, new ConsLoBook(this.lord,
+                             new ConsLoBook(this.tale, 
+                                new ConsLoBook(this.tao, 
                                     this.empty))));
-    ILoBook aurthorList = new ConsLoBook(this.code, new ConsLoBook(this.lord,
+    ILoBook aurthorList = new ConsLoBook(this.lord, new ConsLoBook(this.code,
                              new ConsLoBook(this.jeff, 
                                  new ConsLoBook(this.tao, 
                                     this.empty))));
@@ -512,79 +483,81 @@ class ExamplesBinaryTree {
     
    
     //Tests for helpers
-    
+    //test for inTree()
     boolean testInTree(Tester t) {
          return 
                 t.checkExpect(this.titleTree.inTree(this.lord), true) &&
                 t.checkExpect(this.titleTree.inTree(this.code), false);
     }
-    
+  //test for insert()
     boolean testInsert(Tester t) {
         return 
                 t.checkExpect(new Node(this.authorComp, this.lord,
                         new Node(this.authorComp, this.code, 
-                        		this.leafAuthor, this.leafAuthor),
+                                this.leafAuthor, this.leafAuthor),
                         new Node(this.authorComp, this.jeff,
                                 this.leafAuthor, 
                                 this.leafAuthor)).insert(this.tao),
-                //   lord
-               // code   jeff   +    tao
-               //-   -   -  -
-     this.authorTree);
-     
+                                this.authorTree) &&
+                 t.checkExpect(new Node(this.priceComp, this.jeff,
+                         new Node(this.priceComp, this.tale, this.leafPrice, 
+                                 this.leafPrice),
+                         new Node(this.priceComp, this.lord, this.leafPrice,
+                                 this.leafPrice)).insert(this.tao),
+                         this.priceTree);
     }
-    
+  //test for getFirst()
     boolean testGetFirst(Tester t) {
         return 
            t.checkExpect(this.priceTree.getFirst(), this.jeff) &&
            t.checkExpect(this.titleTree.getFirst(), this.jeff);
     }
-    
+  //test for getRest()
     boolean testGetRest(Tester t) {
         return 
            t.checkExpect(this.titleTree.getRest(), 
                 new Node(this.titleComp, this.lord, this.leafTitle,
                   new Node(this.titleComp, this.tale, 
-                          new Node(this.titleComp, this.tao, this.leafTitle, this.leafTitle),
-                          this.leafTitle))); /* &&
-           t.checkExpect(this.priceTree.getRest(),
-                       (new Node(this.priceComp, this.jeff,
-                        new Node(this.priceComp, this.tale, 
-                     this.leafPrice, this.leafPrice),
-                       new Node(this.priceComp, this.lord,
-                        this.leafPrice, 
-                        this.leafPrice))));
-                        */
+                          new Node(this.titleComp, this.tao, this.leafTitle,
+                                  this.leafTitle), this.leafTitle))) &&
+           t.checkExpect(this.authorTree.getRest(),
+                   new Node(this.authorComp, this.code, this.leafAuthor,
+                           new Node(this.authorComp, this.jeff, this.leafAuthor,
+                                   new Node(this.authorComp, this.tao,
+                                           this.leafAuthor, this.leafAuthor))));
     }
-    
+  //test for sameTree()
     boolean testSameTree(Tester t) {
         return 
             t.checkExpect(this.priceTree.sameTree(this.priceTree), true) &&
             t.checkExpect(this.priceTree.sameTree(this.titleTree), false);
     }
-    
+  //test for sameData()
     boolean testSameData(Tester t) {
         return 
             t.checkExpect(this.priceTree.sameData(this.authorTree), false) &&
             t.checkExpect(this.priceTree.sameData(this.titleTree), true);
     }
-    
+  //test for buildList()
     boolean testBuildList(Tester t) {
         return 
-           t.checkExpect(this.priceTree.buildList(empty), 
-            this.reverseList) &&
-            t.checkExpect(this.priceTree.buildList(new ConsLoBook(this.code,
-                    this.empty)), 
-                    this.allList);
+                t.checkExpect(this.priceTree.buildList(empty), 
+                        this.reverseList) &&
+                        t.checkExpect(this.priceTree.buildList(
+                                new ConsLoBook(this.code,
+                                this.empty)), 
+                                this.allList) &&
+                t.checkExpect(this.priceList.buildTree(
+                        this.leafPrice).buildList(this.empty),
+                        this.reverseList);
     }
-    /*
+    
+  //test for sameAsList()
     boolean testSameAsList(Tester t) {
         return 
             t.checkExpect(this.priceTree.sameAsList(this.priceList), true) &&
-            t.checkExpect(this.priceTree.sameAsList(this.titleList), false);
+            t.checkExpect(this.priceTree.sameAsList(this.aurthorList), false);
     }
-    */ 
-      
 } 
 
 
