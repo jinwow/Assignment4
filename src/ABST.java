@@ -22,7 +22,7 @@ class Book {
 /** represents a list of books **/
 interface ILoBook {
     /** inserts book into list according to given filter **/
-    ILoBook insert(IBookComparator order, Book b);
+    //ILoBook insert(IBookComparator order, Book b);
     /** returns whether the list is empty or not **/
     boolean isEmpty();
     /** insert all the item from a list to the given binary tree **/
@@ -34,10 +34,11 @@ class MtLoBook implements ILoBook {
     MtLoBook() {
         //empty constructor
     }
-    /** inserts book into list according to given filter **/
+    /** inserts book into list according to given filter **
     public ILoBook insert(IBookComparator order, Book b) {
         return new ConsLoBook(b, this);
     }
+    */
     /** returns whether the list is empty or not **/
     public boolean isEmpty() {
         return true;
@@ -56,7 +57,7 @@ class ConsLoBook implements ILoBook {
         this.first = first;
         this.rest = rest;
     }
-    /** inserts book into list according to given filter **/
+    /** inserts book into list according to given filter **
     public ILoBook insert(IBookComparator order, Book b) {
         if (order.compare(this.first, b) > 0) {
             return new ConsLoBook(this.first, this.rest.insert(order, b));
@@ -65,6 +66,7 @@ class ConsLoBook implements ILoBook {
             return new ConsLoBook(b, this);
         }
     }
+    */
     /** returns whether the list is empty or not **/
     public boolean isEmpty() {
         return false;
@@ -347,6 +349,7 @@ class Node extends ABST {
     }
     /** returns whether given tree has the same data as this tree **/
     public boolean sameData(ABST that) {
+        
         if (this.sameTree(that)){
             return true;
         }
@@ -356,6 +359,11 @@ class Node extends ABST {
                     return true;
                 }
                 else {
+                    /*with out this sameData recurse error, with build list... WHY?!?!??
+                    if (this.data == this.right.getData()) {
+                        return true;
+                    }
+                    */
                     return this.getRest().sameData(that);
                 }
             }
@@ -562,12 +570,12 @@ class ExamplesBinaryTree {
     }
     
     boolean testBuildList(Tester t) {
-         return 
-            t.checkExpect(this.priceTree.buildList(empty), 
-             this.reverseList) &&
-             t.checkExpect(this.priceTree.buildList(new ConsLoBook(this.code,
-            		 this.empty)), 
-                     this.allList);
+        return 
+           t.checkExpect(this.priceTree.buildList(empty), 
+            this.reverseList) &&
+            t.checkExpect(this.priceTree.buildList(new ConsLoBook(this.code,
+                    this.empty)), 
+                    this.allList);
     }
     /*
     boolean testSameAsList(Tester t) {
