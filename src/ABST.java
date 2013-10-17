@@ -57,8 +57,8 @@ class ConsLoBook implements ILoBook {
         return false;
     }
     /** insert all the item from a list to the given binary tree **/
-    public ABST buildTree(ABST that){
-    	return this.rest.buildTree(that.insert(this.first));
+    public ABST buildTree(ABST that) {
+        return this.rest.buildTree(that.insert(this.first));
     }
 }
 /** interface for filter classes 
@@ -321,7 +321,7 @@ class Node extends ABST {
     /** returns whether given tree has the same data as this tree **/
     public boolean sameData(ABST that) {
         
-        if (this.sameTree(that)){
+        if (this.sameTree(that)) {
             return true;
         }
         else {
@@ -393,15 +393,15 @@ class Node extends ABST {
     }
         /**Helper for getRest()
          * finds lowest value in branch and adds ABST to left pointer **/
-        public ABST appendToStart(ABST b) {
-            if (this.left.isEmpty()) {
-                this.left = b;
-                return this;
-            }
-            else {
-                return this.left.appendToStart(b);
-            }
+    public ABST appendToStart(ABST b) {
+        if (this.left.isEmpty()) {
+            this.left = b;
+            return this;
         }
+        else {
+            return this.left.appendToStart(b);
+        }
+    }
     
 }
 
@@ -476,16 +476,16 @@ class ExamplesBinaryTree {
     ABST authorTree = new Node(this.authorComp, this.lord,
             new Node(this.authorComp, this.code, 
                     this.leafAuthor, this.leafAuthor),
-            new Node(this.authorComp, this.jeff,this.leafAuthor,
+            new Node(this.authorComp, this.jeff, this.leafAuthor,
                     new Node(this.authorComp, this.tao, 
                             this.leafAuthor, this.leafAuthor) 
-                    ));
+        ));
     
    
     //Tests for helpers
     //test for inTree()
     boolean testInTree(Tester t) {
-         return 
+        return 
                 t.checkExpect(this.titleTree.inTree(this.lord), true) &&
                 t.checkExpect(this.titleTree.inTree(this.code), false);
     }
@@ -517,7 +517,7 @@ class ExamplesBinaryTree {
         return 
            t.checkExpect(this.titleTree.getRest(), 
                 new Node(this.titleComp, this.lord, this.leafTitle,
-                  new Node(this.titleComp, this.tale, 
+                   new Node(this.titleComp, this.tale, 
                           new Node(this.titleComp, this.tao, this.leafTitle,
                                   this.leafTitle), this.leafTitle))) &&
            t.checkExpect(this.authorTree.getRest(),

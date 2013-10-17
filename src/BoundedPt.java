@@ -6,7 +6,16 @@
  * guoj
  */
 import tester.*;
-import javalib.worldimages.Posn;
+
+abstract class Posn {
+    int x;
+    int y;
+    Posn(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 class BoundedPt extends Posn {
     int width = 600; // the width of the canvas
     int height = 400; // the height of the canvas
