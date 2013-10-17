@@ -1,3 +1,10 @@
+/*
+ * assignment 4
+ * Robbins Jeffrey
+ * Robbinsj
+ * Guo jinhua
+ * guoj
+ */
 import tester.*;
 
 /** represents a book **/
